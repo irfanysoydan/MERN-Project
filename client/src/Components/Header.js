@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/esm/Button';
 import Nav from 'react-bootstrap/Nav';
@@ -5,7 +6,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 
-function BasicExample() {
+const Header = ({ user, setUser }) => {
+  useEffect(() => {
+    if(localStorage.getItem("user") && !user){
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+
+  }, [user])
   return (
     <Navbar bg="primary" className='py-4' expand="lg">
       <Container>
@@ -30,12 +37,20 @@ function BasicExample() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        <Button variant='outline-light'>
-          <Link className="text-white text-decoration-none" to={"/login"}>Giris Yap</Link>
-        </Button>
+        {
+          user ? (<Button variant='outline-light' className="text-white text-decoration-none"
+            onClick={(e) => {
+              localStorage.removeItem("user");
+              setUser(null);
+            }}>Çıkış Yap</Button>
+          ) : (
+            <Button variant='outline-light'>
+              <Link className="text-white text-decoration-none" to={"/login"}>Giris Yap</Link>
+            </Button>)
+        }
       </Container>
     </Navbar>
   );
 }
 
-export default BasicExample;
+export default Header;
