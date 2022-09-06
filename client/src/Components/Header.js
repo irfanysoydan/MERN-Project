@@ -36,7 +36,6 @@ const Header = ({ user, setUser }) => {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-        </Navbar.Collapse>
         {
           user ? (<Button variant='outline-light' className="text-white text-decoration-none"
             onClick={(e) => {
@@ -48,6 +47,7 @@ const Header = ({ user, setUser }) => {
               <Link className="text-white text-decoration-none" to={"/login"}>Giris Yap</Link>
             </Button>)
         }
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

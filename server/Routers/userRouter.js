@@ -9,7 +9,10 @@ const router = express.Router()
 router.post("/signup", async (req, res) => {
     try {
         console.log(req.body)
-        const { fullName, password, phoneNumber, email } = req.body;
+        const { fullName, password, correctionPassword, phoneNumber, email } = req.body;
+
+        if (password !== correctionPassword)
+            return res.status(400).json({ message: "Password do not match." })
 
         const userExists = await User.findOne({ email })
         if (userExists)

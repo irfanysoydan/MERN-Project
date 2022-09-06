@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Container, Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from "react-bootstrap"
 import { Link, useNavigate } from 'react-router-dom'
 import { Login } from '../axios'
+import toast from "react-hot-toast"
 
 const LoginScreen = ({ setUser }) => {
     const navigate = useNavigate()
@@ -24,7 +25,7 @@ const LoginScreen = ({ setUser }) => {
 
                             })
                             .catch((err) => {
-                                console.log(err);
+                                toast.error(err.response.data.message)
                             })
                     }}>
                         <FormGroup className='mb-3' controlId='formBasicEmail'>
@@ -36,7 +37,7 @@ const LoginScreen = ({ setUser }) => {
                             <FormControl onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} type='password' placeholder='Şifrenizi Giriniz'></FormControl>
                         </FormGroup>
                         <FormGroup className='d-grid'>
-                            <Button variant="primary" type='submit' size='lg'>
+                            <Button disabled={formData.email === "" || formData.password === ""} variant="primary" type='submit' size='lg'>
                                 Giriş Yap
                             </Button>
                             <Form.Text className="text-center mt-2">
